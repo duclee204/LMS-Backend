@@ -10,7 +10,7 @@ public class UserAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_answer_id", nullable = false)
-    private Integer id;
+    private Integer user_answerId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -35,11 +35,11 @@ public class UserAnswer {
     private Boolean isCorrect;
 
     public Integer getId() {
-        return id;
+        return user_answerId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer user_answerId) {
+        this.user_answerId = user_answerId;
     }
 
     public org.example.lmsbackend.model.UserQuizAttempt getAttempt() {

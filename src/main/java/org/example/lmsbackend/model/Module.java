@@ -10,7 +10,7 @@ public class Module {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "module_id", nullable = false)
-    private Integer id;
+    private Integer moduleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -28,11 +28,11 @@ public class Module {
     private Integer orderNumber;
 
     public Integer getId() {
-        return id;
+        return moduleId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer moduleId) {
+        this.moduleId = moduleId;
     }
 
     public Course getCourse() {

@@ -13,7 +13,7 @@ public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "progress_id", nullable = false)
-    private Integer id;
+    private Integer progressId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -36,11 +36,11 @@ public class Progress {
     private Instant completedAt;
 
     public Integer getId() {
-        return id;
+        return progressId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer progressId) {
+        this.progressId = progressId;
     }
 
     public org.example.lmsbackend.model.User getUser() {

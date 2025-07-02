@@ -5,12 +5,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "users")
+
 public class User {
-
-    public enum Role {
-        admin, instructor, student
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -27,6 +23,10 @@ public class User {
 
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
+
+    public enum Role {
+        admin, instructor, student
+    }
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -48,7 +48,6 @@ public class User {
     @Column(name = "updated_at", insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp updatedAt;
-
     // Getters and Setters
     public Integer getUserId() {
         return userId;

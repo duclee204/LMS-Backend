@@ -12,7 +12,7 @@ public class Discussion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "discussion_id", nullable = false)
-    private Integer id;
+    private Integer discussionId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -40,11 +40,11 @@ public class Discussion {
     }
 
     public Integer getId() {
-        return id;
+        return discussionId;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.discussionId = discussionId;
     }
 
     public Course getCourse() {

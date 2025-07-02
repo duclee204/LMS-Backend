@@ -12,7 +12,7 @@ public class DiscussionReply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reply_id", nullable = false)
-    private Integer id;
+    private Integer replyId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -37,11 +37,11 @@ public class DiscussionReply {
     }
 
     public Integer getId() {
-        return id;
+        return replyId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer replyId) {
+        this.replyId = replyId;
     }
 
     public org.example.lmsbackend.model.Discussion getDiscussion() {

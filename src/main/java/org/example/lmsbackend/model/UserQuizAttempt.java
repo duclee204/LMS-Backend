@@ -12,7 +12,7 @@ public class UserQuizAttempt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attempt_id", nullable = false)
-    private Integer id;
+    private Integer attemptId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -31,11 +31,11 @@ public class UserQuizAttempt {
     private Instant attemptedAt;
 
     public Integer getId() {
-        return id;
+        return attemptId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer attemptId) {
+        this.attemptId = attemptId;
     }
 
     public org.example.lmsbackend.model.User getUser() {

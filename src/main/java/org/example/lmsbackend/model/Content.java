@@ -7,10 +7,13 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "contents")
 public class Content {
+    public enum Type {
+        video, document, text, quiz
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "content_id", nullable = false)
-    private Integer id;
+    private Integer contentId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -20,9 +23,9 @@ public class Content {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Lob
-    @Column(name = "type", nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Type type;
 
     @Column(name = "content_url")
     private String contentUrl;
@@ -34,11 +37,11 @@ public class Content {
     private Integer orderNumber;
 
     public Integer getId() {
-        return id;
+        return contentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer contentId) {
+        this.contentId = contentId;
     }
 
     public org.example.lmsbackend.model.Module getModule() {
@@ -57,11 +60,11 @@ public class Content {
         this.title = title;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

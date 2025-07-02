@@ -10,7 +10,7 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answer_id", nullable = false)
-    private Integer id;
+    private Integer categoryId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -25,11 +25,11 @@ public class Answer {
     private Boolean isCorrect = false;
 
     public Integer getId() {
-        return id;
+        return categoryId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public org.example.lmsbackend.model.Question getQuestion() {

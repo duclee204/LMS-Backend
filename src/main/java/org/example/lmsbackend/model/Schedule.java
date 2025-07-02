@@ -12,7 +12,7 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id", nullable = false)
-    private Integer id;
+    private Integer scheduleId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -45,11 +45,11 @@ public class Schedule {
     }
 
     public Integer getId() {
-        return id;
+        return scheduleId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
     public Course getCourse() {

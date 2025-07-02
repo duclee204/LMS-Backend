@@ -12,7 +12,7 @@ public class CourseReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id", nullable = false)
-    private Integer id;
+    private Integer reviewId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -40,11 +40,11 @@ public class CourseReview {
     }
 
     public Integer getId() {
-        return id;
+        return reviewId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer reviewId) {
+        this.reviewId = reviewId;
     }
 
     public org.example.lmsbackend.model.User getUser() {

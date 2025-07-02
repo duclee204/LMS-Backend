@@ -13,7 +13,7 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id", nullable = false)
-    private Integer id;
+    private Integer notificationId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -41,11 +41,11 @@ public class Notification {
     }
 
     public Integer getId() {
-        return id;
+        return notificationId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer notificationId) {
+        this.notificationId = notificationId;
     }
 
     public org.example.lmsbackend.model.User getUser() {

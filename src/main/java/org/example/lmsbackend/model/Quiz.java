@@ -10,7 +10,7 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id", nullable = false)
-    private Integer id;
+    private Integer quizId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -31,11 +31,11 @@ public class Quiz {
     private Integer totalPoints = 0;
 
     public Integer getId() {
-        return id;
+        return quizId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer quizId) {
+        this.quizId = quizId;
     }
 
     public Content getContent() {

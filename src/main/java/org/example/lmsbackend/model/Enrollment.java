@@ -9,10 +9,13 @@ import java.time.Instant;
 @Entity
 @Table(name = "enrollments")
 public class Enrollment {
+    public enum Status {
+        active, completed, dropped
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "enrollment_id", nullable = false)
-    private Integer id;
+    private Integer enrollmentId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -27,19 +30,19 @@ public class Enrollment {
     @Column(name = "enrolled_at")
     private Instant enrolledAt;
 
-    @Lob
-    @Column(name = "status")
-    private String status = "active";
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status = Status.active;
 
     @Column(name = "completed_at")
     private Instant completedAt;
 
     public Integer getId() {
-        return id;
+        return enrollmentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer enrollmentId) {
+        this.enrollmentId = enrollmentId;
     }
 
     public org.example.lmsbackend.model.User getUser() {
@@ -66,11 +69,11 @@ public class Enrollment {
         this.enrolledAt = enrolledAt;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -85,6 +88,7 @@ public class Enrollment {
     @PrePersist
     protected void onCreate() {
         if (enrolledAt == null) enrolledAt = Instant.now();
-        if (status == null) status = "active";
+        if (status == null) status = Status.active;
     }
+
 }

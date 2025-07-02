@@ -1,6 +1,5 @@
 package org.example.lmsbackend.controller;
 
-
 import org.example.lmsbackend.model.Categories;
 import org.example.lmsbackend.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
