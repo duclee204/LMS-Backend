@@ -24,7 +24,7 @@ public class CourseService {
         course.setStatus(Course.Status.valueOf(dto.getStatus())); // ✅
         course.setPrice(dto.getPrice());
 
-        return courseMapper.insertCourse(course) > 0;.
+        return courseMapper.insertCourse(course) > 0;
     }
 
     public List<CourseDTO> getCourses(Integer categoryId, Integer instructorId, String status) {
