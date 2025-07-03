@@ -22,9 +22,9 @@ public class CourseService {
         course.setCategoryId(dto.getCategoryId());
         course.setInstructorId(dto.getInstructorId());
         course.setStatus(Course.Status.valueOf(dto.getStatus())); // ✅
-        course.setPrice(BigDecimal.valueOf(100.0)); // hoặc dto.getPrice()
+        course.setPrice(dto.getPrice());
 
-        return courseMapper.insertCourse(course) > 0;
+        return courseMapper.insertCourse(course) > 0;.
     }
 
     public List<CourseDTO> getCourses(Integer categoryId, Integer instructorId, String status) {

@@ -49,7 +49,7 @@ public class Course {
     private Status status = Status.draft;
 
     @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal price = BigDecimal.ZERO;
+    private BigDecimal price;
 
     @Column(name = "created_at", insertable = false, updatable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

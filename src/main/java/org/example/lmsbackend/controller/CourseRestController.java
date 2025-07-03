@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -23,10 +24,18 @@ public class CourseRestController {
     @PostMapping("/create")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> createCourse(@RequestBody CourseDTO courseDTO) {
+        if (courseDTO.getPrice() == null) {
+            return ResponseEntity.badRequest().body("Giá khóa học không được để trống.");
+        }
+        if (courseDTO.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            return ResponseEntity.badRequest().body("Giá phải lớn hơn 0.");
+        }
+
         boolean created = courseService.createCourse(courseDTO);
         if (!created) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tạo khóa học thất bại");
         }
+        System.out.println("✅ Giá nhận từ client: " + courseDTO.getPrice());
         return ResponseEntity.ok("Tạo khóa học thành công");
     }
     @GetMapping("/list")

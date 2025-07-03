@@ -1,11 +1,10 @@
 package org.example.lmsbackend.controller;
 
-
 import org.example.lmsbackend.model.User;
 import org.example.lmsbackend.dto.UserDTO;
-import org.example.lmsbackend.repository.UserMapper;
 import org.example.lmsbackend.service.UserService;
 import org.example.lmsbackend.utils.JwtTokenUtil;
+import org.example.lmsbackend.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,11 +49,17 @@ public class UserRestController {
 
     // ✅ API đăng ký
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
-        boolean created = userService.register(userDTO);
-        return created ?
-                ResponseEntity.ok("User registered successfully") :
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
+    public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+        try {
+            boolean created = userService.register(userDTO);
+            return created ?
+                    ResponseEntity.ok(Map.of("message", "User registered successfully")) :
+                    ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Registration failed"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Internal server error"));
+        }
     }
 
     // ✅ API lấy danh sách người dùng theo điều kiện

@@ -15,7 +15,7 @@ public interface CourseMapper {
     int insertCourse(Course course);
     @Select("""
     SELECT 
-        c.course_id AS id,
+        c.course_id AS courseId,
         c.title,
         c.description,
         c.status,
