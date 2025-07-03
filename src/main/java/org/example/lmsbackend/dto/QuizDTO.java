@@ -1,52 +1,25 @@
-package org.example.lmsbackend.model;
+package org.example.lmsbackend.dto;
 
-import jakarta.persistence.*;
 import org.example.lmsbackend.enums.QuizType;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "quizzes")
-public class Quiz {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "quiz_id")
-    private Integer quizId;
-
-    @Column(nullable = false)
+public class QuizDTO {
     private String title;
-
-    @Lob
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "quiz_type", nullable = false)
     private QuizType quizType;
-
     private Integer timeLimit;
-    private Boolean shuffleAnswers = false;
-    private Boolean allowMultipleAttempts = false;
-    private Boolean showQuizResponses = false;
-    private Boolean showOneQuestionAtATime = false;
-
+    private Boolean shuffleAnswers;
+    private Boolean allowMultipleAttempts;
+    private Boolean showQuizResponses;
+    private Boolean showOneQuestionAtATime;
     private LocalDateTime dueDate;
     private LocalDateTime availableFrom;
     private LocalDateTime availableUntil;
-
-    @Column(nullable = false)
-    private Boolean publish = false;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "course_id")
-    private Course course;
-
-    @Column(name = "course_id", insertable = false, updatable = false)
+    private Boolean publish;
     private Integer courseId;
 
     // Getters and Setters
-    public Integer getQuizId() { return quizId; }
-    public void setQuizId(Integer quizId) { this.quizId = quizId; }
-
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
@@ -82,9 +55,6 @@ public class Quiz {
 
     public Boolean getPublish() { return publish; }
     public void setPublish(Boolean publish) { this.publish = publish; }
-
-    public Course getCourse() { return course; }
-    public void setCourse(Course course) { this.course = course; }
 
     public Integer getCourseId() { return courseId; }
     public void setCourseId(Integer courseId) { this.courseId = courseId; }

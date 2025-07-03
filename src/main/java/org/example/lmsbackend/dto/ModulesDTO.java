@@ -6,7 +6,7 @@ public class ModulesDTO {
     private String title;
     private String description;
     private int orderNumber;
-
+    private Boolean published;
     // Getters and Setters
     public int getModuleId() {
         return moduleId;
@@ -45,5 +45,13 @@ public class ModulesDTO {
     }
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public Boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
     }
 }

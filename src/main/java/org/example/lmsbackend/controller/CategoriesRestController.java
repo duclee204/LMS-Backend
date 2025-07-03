@@ -17,7 +17,6 @@ public class CategoriesRestController {
 
     @Autowired
     private CategoriesService categoriesService;
-
     @PostMapping
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<String> createCategory(@RequestBody Categories category) {

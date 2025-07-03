@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "contents")
 public class Content {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "content_id", nullable = false)
@@ -15,78 +16,111 @@ public class Content {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "module_id", nullable = false)
-    private org.example.lmsbackend.model.Module module;
+    private Module module;
 
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Lob
     @Column(name = "type", nullable = false)
-    private String type;
+    private String type; // e.g., "video", "pdf", "document", "link"
 
     @Column(name = "content_url")
-    private String contentUrl;
+    private String contentUrl; // link tới video, file tài liệu,...
+
+    @Column(name = "file_name")
+    private String fileName; // chỉ dùng nếu là tài liệu
 
     @Column(name = "duration")
-    private Integer duration;
+    private Integer duration; // dùng cho video/audio
 
     @Column(name = "order_number", nullable = false)
     private Integer orderNumber;
 
+    @Column(name = "published")
+    private boolean published = false;
+
+    @Column(name = "not_published")
+    private boolean notPublished = true;
+
+    // === GETTERS ===
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public org.example.lmsbackend.model.Module getModule() {
+    public Module getModule() {
         return module;
-    }
-
-    public void setModule(org.example.lmsbackend.model.Module module) {
-        this.module = module;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getContentUrl() {
         return contentUrl;
     }
 
-    public void setContentUrl(String contentUrl) {
-        this.contentUrl = contentUrl;
+    public String getFileName() {
+        return fileName;
     }
 
     public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
     public Integer getOrderNumber() {
         return orderNumber;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public boolean isNotPublished() {
+        return notPublished;
+    }
+
+    // === SETTERS ===
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setContentUrl(String contentUrl) {
+        this.contentUrl = contentUrl;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
     }
 
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
+    public void setNotPublished(boolean notPublished) {
+        this.notPublished = notPublished;
+    }
 }
