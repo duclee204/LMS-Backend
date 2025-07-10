@@ -3,8 +3,6 @@ package org.example.lmsbackend.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.lmsbackend.model.User;
-import org.example.lmsbackend.model.Categories;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -18,7 +16,8 @@ public class Course {
     public enum Status {
         draft, published, archived
     }
-
+    @Column(name = "thumbnail_url", length = 512)
+    private String thumbnailUrl;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
@@ -49,7 +48,7 @@ public class Course {
     private Status status = Status.draft;
 
     @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal price;
+    private BigDecimal price = BigDecimal.ZERO;
 
     @Column(name = "created_at", insertable = false, updatable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

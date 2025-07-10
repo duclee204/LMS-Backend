@@ -3,7 +3,6 @@ package org.example.lmsbackend.controller;
 import org.example.lmsbackend.dto.ContentsDTO;
 import org.example.lmsbackend.service.ContentsService;
 import org.example.lmsbackend.service.CourseService;
-
 import org.example.lmsbackend.service.EnrollmentsService;
 import org.example.lmsbackend.service.ModulesService;
 import org.example.lmsbackend.security.CustomUserDetails;
@@ -29,7 +28,6 @@ public class ContentsRestController {
 
     @Autowired
     private ModulesService moduleService; // 👈 để tra courseId từ moduleId
-
     @PostMapping
     @PreAuthorize("hasAnyRole('admin', 'instructor')")
     public ResponseEntity<String> createContent(@RequestBody ContentsDTO request,
@@ -47,6 +45,7 @@ public class ContentsRestController {
         contentsService.createContent(request);
         return ResponseEntity.ok("Content created successfully");
     }
+
     @GetMapping("/by-course/{courseId}")
     @PreAuthorize("hasAnyRole('admin', 'instructor', 'student')")
     public ResponseEntity<?> getContentsByCourse(
@@ -113,7 +112,4 @@ public class ContentsRestController {
         contentsService.deleteContent(contentId);
         return ResponseEntity.ok("Xóa nội dung thành công");
     }
-
-
 }
-

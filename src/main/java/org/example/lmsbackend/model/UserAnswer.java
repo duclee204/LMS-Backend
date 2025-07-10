@@ -20,7 +20,7 @@ public class UserAnswer {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
+    private Questions question;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
@@ -50,11 +50,11 @@ public class UserAnswer {
         this.attempt = attempt;
     }
 
-    public Question getQuestion() {
+    public Questions getQuestion() {
         return question;
     }
 
-    public void setQuestion(Question question) {
+    public void setQuestion(Questions question) {
         this.question = question;
     }
 

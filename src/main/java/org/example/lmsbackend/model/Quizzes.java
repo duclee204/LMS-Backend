@@ -1,27 +1,23 @@
 package org.example.lmsbackend.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "quizzes")
-public class Quiz {
+public class Quizzes {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "quiz_id", nullable = false)
+    @Column(name = "quiz_id")
     private Integer quizId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "content_id", nullable = false)
-    private Content content;
+    @Column(name = "content_id", nullable = false)
+    private Integer contentId;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false, length = 255)
     private String title;
 
-    @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "time_limit")
@@ -30,20 +26,29 @@ public class Quiz {
     @Column(name = "total_points")
     private Integer totalPoints = 0;
 
-    public Integer getId() {
+
+    public Quizzes() {}
+
+    // ✅ constructor nhận quizId
+    public Quizzes(Integer quizId) {
+        this.quizId = quizId;
+    }
+    // Getters & Setters
+
+    public Integer getQuizId() {
         return quizId;
     }
 
-    public void setId(Integer quizId) {
+    public void setQuizId(Integer quizId) {
         this.quizId = quizId;
     }
 
-    public Content getContent() {
-        return content;
+    public Integer getContentId() {
+        return contentId;
     }
 
-    public void setContent(Content content) {
-        this.content = content;
+    public void setContentId(Integer contentId) {
+        this.contentId = contentId;
     }
 
     public String getTitle() {
@@ -77,10 +82,4 @@ public class Quiz {
     public void setTotalPoints(Integer totalPoints) {
         this.totalPoints = totalPoints;
     }
-
-    @PrePersist
-    protected void onCreate() {
-        if (totalPoints == null) totalPoints = 0;
-    }
-
 }

@@ -3,35 +3,35 @@ package org.example.lmsbackend.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.example.lmsbackend.model.Course;
 
 @Entity
 @Table(name = "modules")
-public class Module {
+public class Modules {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "module_id", nullable = false)
-    private Integer moduleId;
+    @Column(name = "module_id")
+    private int moduleId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "course_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false, foreignKey = @ForeignKey(name = "fk_module_course"))
     private Course course;
 
-    @Column(name = "title", nullable = false)
+    @Column(nullable = false, length = 255)
     private String title;
 
-    @Lob
-    @Column(name = "description")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "order_number", nullable = false)
-    private Integer orderNumber;
+    private int orderNumber;
 
-    public Integer getId() {
+    // Getters and Setters
+    public int getModuleId() {
         return moduleId;
     }
 
-    public void setId(Integer moduleId) {
+    public void setModuleId(int moduleId) {
         this.moduleId = moduleId;
     }
 
@@ -59,12 +59,11 @@ public class Module {
         this.description = description;
     }
 
-    public Integer getOrderNumber() {
+    public int getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(Integer orderNumber) {
+    public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
-
 }

@@ -28,5 +28,4 @@ public interface ModulesMapper {
     void deleteModule(@Param("moduleId") int moduleId);
     @Select("SELECT course_id FROM modules WHERE module_id = #{moduleId}")
     int getCourseIdByModuleId(@Param("moduleId") int moduleId);
-
 }

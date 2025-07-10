@@ -15,7 +15,7 @@ public class Answer {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "question_id", nullable = false)
-    private org.example.lmsbackend.model.Question question;
+    private org.example.lmsbackend.model.Questions question;
 
     @Lob
     @Column(name = "answer_text", nullable = false)
@@ -32,11 +32,11 @@ public class Answer {
         this.categoryId = categoryId;
     }
 
-    public org.example.lmsbackend.model.Question getQuestion() {
+    public org.example.lmsbackend.model.Questions getQuestion() {
         return question;
     }
 
-    public void setQuestion(org.example.lmsbackend.model.Question question) {
+    public void setQuestion(org.example.lmsbackend.model.Questions question) {
         this.question = question;
     }
 

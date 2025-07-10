@@ -22,7 +22,7 @@ public class UserQuizAttempt {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "quiz_id", nullable = false)
-    private Quiz quiz;
+    private Quizzes quiz;
 
     @Column(name = "score", nullable = false)
     private Integer score = 0;
@@ -46,11 +46,11 @@ public class UserQuizAttempt {
         this.user = user;
     }
 
-    public Quiz getQuiz() {
+    public Quizzes getQuiz() {
         return quiz;
     }
 
-    public void setQuiz(Quiz quiz) {
+    public void setQuiz(Quizzes quiz) {
         this.quiz = quiz;
     }
 

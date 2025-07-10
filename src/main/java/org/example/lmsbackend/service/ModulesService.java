@@ -1,8 +1,7 @@
 package org.example.lmsbackend.service;
 
-
-import org.example.lmsbackend.repository.ModulesMapper;
 import org.example.lmsbackend.dto.ModulesDTO;
+import org.example.lmsbackend.repository.ModulesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +35,7 @@ public class ModulesService {
     public int getCourseIdByModuleId(int moduleId) {
         return modulesMapper.getCourseIdByModuleId(moduleId);
     }
+
 
 
 }

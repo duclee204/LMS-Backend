@@ -1,54 +1,53 @@
 package org.example.lmsbackend.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
+import org.example.lmsbackend.model.Modules;
 @Entity
 @Table(name = "contents")
 public class Content {
     public enum Type {
         video, document, text, quiz
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "content_id", nullable = false)
+    @Column(name = "content_id")
     private Integer contentId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "module_id", nullable = false)
-    private org.example.lmsbackend.model.Module module;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "module_id", nullable = false, foreignKey = @ForeignKey(name = "fk_content_module"))
+    private Modules module;
 
-    @Column(name = "title", nullable = false)
+    @Column(nullable = false, length = 255)
     private String title;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Type type;
 
-    @Column(name = "content_url")
+    @Column(name = "content_url", length = 255)
     private String contentUrl;
 
-    @Column(name = "duration")
-    private Integer duration;
+    @Column
+    private Integer duration; // đơn vị: giây
 
     @Column(name = "order_number", nullable = false)
     private Integer orderNumber;
 
-    public Integer getId() {
+    // Getters & Setters
+    public Integer getContentId() {
         return contentId;
     }
 
-    public void setId(Integer contentId) {
+    public void setContentId(Integer contentId) {
         this.contentId = contentId;
     }
 
-    public org.example.lmsbackend.model.Module getModule() {
+    public Modules getModule() {
         return module;
     }
 
-    public void setModule(org.example.lmsbackend.model.Module module) {
+    public void setModule(Modules module) {
         this.module = module;
     }
 
@@ -91,5 +90,4 @@ public class Content {
     public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
     }
-
 }

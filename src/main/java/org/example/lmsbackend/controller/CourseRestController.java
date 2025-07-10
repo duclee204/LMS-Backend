@@ -2,17 +2,19 @@ package org.example.lmsbackend.controller;
 
 import org.example.lmsbackend.model.Course;
 import org.example.lmsbackend.dto.CourseDTO;
-import org.example.lmsbackend.security.CustomUserDetails;
 import org.example.lmsbackend.service.CourseService;
+import org.example.lmsbackend.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -20,27 +22,32 @@ public class CourseRestController {
 
     @Autowired
     private CourseService courseService;
-
-    @PostMapping("/create")
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('admin')")
-    public ResponseEntity<?> createCourse(@RequestBody CourseDTO courseDTO) {
-        if (courseDTO.getPrice() == null) {
-            return ResponseEntity.badRequest().body("Giá khóa học không được để trống.");
-        }
-        if (courseDTO.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
-            return ResponseEntity.badRequest().body("Giá phải lớn hơn 0.");
-        }
+    public ResponseEntity<?> createCourse(
+            @RequestPart("course") CourseDTO courseDTO,
+            @RequestPart("image") MultipartFile imageFile) {
 
-        boolean created = courseService.createCourse(courseDTO);
-        if (!created) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tạo khóa học thất bại");
+        System.out.println("📥 Received courseDTO: " + courseDTO);
+        System.out.println("📷 Received file: " + imageFile.getOriginalFilename());
+
+        try {
+            boolean created = courseService.createCourse(courseDTO, imageFile);
+            if (!created) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("message", "Tạo khóa học thất bại"));
+            }
+            return ResponseEntity.ok(Map.of("message", "Tạo khóa học thành công"));
+        } catch (Exception e) {
+            e.printStackTrace(); // xem lỗi cụ thể ở terminal
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Lỗi: " + e.getMessage()));
         }
-        System.out.println("✅ Giá nhận từ client: " + courseDTO.getPrice());
-        return ResponseEntity.ok("Tạo khóa học thành công");
     }
+
     @GetMapping("/list")
     @PreAuthorize("hasRole('admin') or hasRole('instructor')")
-    public ResponseEntity<List<CourseDTO>> listCourses(
+    public ResponseEntity<List<Course>> listCourses(
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String status
     ) {
@@ -51,7 +58,7 @@ public class CourseRestController {
             boolean isInstructor = customUser.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_instructor"));
             if (isInstructor) {
-                instructorId = customUser.getId();
+                instructorId = customUser.getId(); // ✅ lấy đúng userId
             }
             System.out.println("🔍 User ID: " + customUser.getId());
         }
@@ -59,12 +66,9 @@ public class CourseRestController {
         System.out.printf("getCourses with: categoryId=%s, instructorId=%s, status=%s%n",
                 categoryId, instructorId, status);
 
-        // 🔁 Gọi service trả về DTO thay vì entity
-        List<CourseDTO> courses = courseService.getCourses(categoryId, instructorId, status);
+        List<Course> courses = courseService.getCourses(categoryId, instructorId, status);
         return ResponseEntity.ok(courses);
     }
-
-
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<?> updateCourse(@PathVariable("id") Integer courseId, @RequestBody Course course) {

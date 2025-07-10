@@ -21,7 +21,7 @@ public class CategoriesRestController {
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<String> createCategory(@RequestBody Categories category) {
         categoriesService.createCategory(category);
-        return new ResponseEntity<>("Categories created successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
@@ -35,15 +35,15 @@ public class CategoriesRestController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id, @RequestBody Categories category) {
-        category.setId(id); // ✅ Đúng tên hàm
+        category.setCategoryId(id);
         categoriesService.updateCategory(category);
-        return new ResponseEntity<>("Categories updated successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Category updated successfully", HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('admin')")
     public ResponseEntity<String> deleteCategory(@PathVariable("id") Integer id) {
         categoriesService.deleteCategory(id);
-        return new ResponseEntity<>("Categories deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>("Category deleted successfully", HttpStatus.OK);
     }
 
 }
